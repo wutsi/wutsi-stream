@@ -5,6 +5,7 @@ import com.wutsi.stream.Event
 import com.wutsi.stream.EventHandler
 import com.wutsi.stream.EventStream
 import com.wutsi.stream.ObjectMapperBuilder
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.file.Files
 import java.text.SimpleDateFormat
@@ -24,8 +25,9 @@ class FileEventStream(
     private val pollDelayMilliseconds: Long = 300
 ) : EventStream {
     companion object {
-        const val OUTPUT = "out"
-        const val INPUT = "in"
+        private val LOGGER = LoggerFactory.getLogger(FileEventStream::class.java)
+        private const val OUTPUT = "out"
+        private const val INPUT = "in"
     }
 
     private val mapper: ObjectMapper = ObjectMapperBuilder().build()
@@ -35,11 +37,11 @@ class FileEventStream(
     private val executor: ScheduledExecutorService
 
     init {
-        executor = Executors.newScheduledThreadPool(1)
-        input = createIntputFile(name)
-        output = createOutputFile(name)
+        this.executor = Executors.newScheduledThreadPool(1)
+        this.input = createIntputFile(name)
+        this.output = createOutputFile(name)
 
-        watch(input, handler)
+        watch(this.input, handler)
     }
 
     override fun close() {
@@ -47,13 +49,15 @@ class FileEventStream(
     }
 
     override fun enqueue(type: String, payload: Any) {
+        LOGGER.info("enqueue($type, $payload)")
         val event = createEvent(type, payload)
-        persist(event, input)
+        persist(event, this.input)
     }
 
     override fun publish(type: String, payload: Any) {
+        LOGGER.info("publish($type, $payload)")
         val event = createEvent(type, payload)
-        persist(event, output)
+        persist(event, this.output)
     }
 
     override fun subscribeTo(source: String) {
@@ -74,8 +78,9 @@ class FileEventStream(
 
         val now = SimpleDateFormat("yyyyMMddHHmm").format(Date())
         val file = File(directory, "$now-${event.id}.json")
-        val json = mapper.writeValueAsString(event)
-        Files.writeString(file.toPath(), json)
+        LOGGER.info("Storing event to $file")
+
+        Files.writeString(file.toPath(), mapper.writeValueAsString(event))
     }
 
     private fun watch(directory: File, handler: EventHandler) = DirectoryWatcher(

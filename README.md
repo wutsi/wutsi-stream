@@ -3,6 +3,6 @@
 
 [![JDK](https://img.shields.io/badge/jdk-11-brightgreen.svg)](https://jdk.java.net/11/)
 ![](https://img.shields.io/badge/language-kotlin-blue.svg)
-[![JDK](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](https://jdk.java.net/11/)
+[![JDK](https://img.shields.io/badge/version-1.2.0-brightgreen.svg)](https://jdk.java.net/11/)
 
 Simple API for streaming events
