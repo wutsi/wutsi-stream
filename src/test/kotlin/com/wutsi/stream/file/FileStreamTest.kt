@@ -6,7 +6,6 @@ import com.nhaarman.mockitokotlin2.verify
 import com.wutsi.stream.Event
 import com.wutsi.stream.EventHandler
 import com.wutsi.stream.ObjectMapperBuilder
-import com.wutsi.stream.Stream
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -16,15 +15,15 @@ import kotlin.test.assertNotNull
 
 internal class FileStreamTest {
     lateinit var handler: EventHandler
-    lateinit var stream: Stream
-    val directory = File(System.getProperty("user.home"), "test_file_stream")
+    lateinit var stream: FileEventStream
+    val root = File(System.getProperty("user.home") + "/wutsi/file-stream")
 
     @BeforeEach
     fun setUp() {
-        directory.deleteRecursively()
+        root.deleteRecursively()
 
         handler = mock()
-        stream = FileStream(handler, directory)
+        stream = FileEventStream(name = "test", root = root, handler = handler)
     }
 
     @Test
@@ -32,8 +31,17 @@ internal class FileStreamTest {
     }
 
     @Test
-    fun enqueue() {
+    fun `enqueued event stored input INPUT directory`() {
         stream.enqueue("foo", mapOf("yo" to "man"))
+
+        val files = stream.input.listFiles()
+        assertEquals(1, files.size)
+    }
+
+    @Test
+    fun `enqueued event handled`() {
+        stream.enqueue("foo", mapOf("yo" to "man"))
+        Thread.sleep(15000)
 
         val event = argumentCaptor<Event>()
         verify(handler).onEvent(event.capture())
@@ -45,11 +53,10 @@ internal class FileStreamTest {
     }
 
     @Test
-    fun publish() {
+    fun `published event stored into OUTPUT directory`() {
         stream.publish("foo", mapOf("yo" to "man"))
 
-        val files = directory.listFiles()
-
+        val files = stream.output.listFiles()
         assertEquals(1, files.size)
         val json = Files.readString(files[0].toPath())
         val event = ObjectMapperBuilder().build().readValue(json, Event::class.java)
@@ -58,5 +65,22 @@ internal class FileStreamTest {
         assertNotNull(event.timestamp)
         assertEquals("foo", event.type)
         assertEquals("{\"yo\":\"man\"}", event.payload)
+    }
+
+    @Test
+    fun `subscribe to stream and receive events from that stream`() {
+        val source = FileEventStream(
+            root = root,
+            name = "source",
+            handler = mock()
+        )
+
+        stream.subscribeTo("source")
+
+        source.publish("test", "oups")
+        Thread.sleep(15000)
+
+        assertEquals(1, source.output.listFiles().size)
+        assertEquals(1, stream.input.listFiles().size)
     }
 }
