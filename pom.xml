@@ -6,15 +6,15 @@
 
   <artifactId>wutsi-stream</artifactId>
   <groupId>com.wutsi</groupId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <packaging>jar</packaging>
 
   <name>wutsi-stream</name>
 
   <properties>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-    <jacoco.threshold.line>0.68</jacoco.threshold.line>
-    <jacoco.threshold.class>0.80</jacoco.threshold.class>
+    <jacoco.threshold.line>0.95</jacoco.threshold.line>
+    <jacoco.threshold.class>0.95</jacoco.threshold.class>
 
     <jackson.version>2.10.3</jackson.version>
     <jackson-datatype-jsr310.version>2.12.2</jackson-datatype-jsr310.version>
