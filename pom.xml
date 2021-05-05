@@ -29,6 +29,11 @@
     <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
   </properties>
 
+  <scm>
+    <developerConnection>scm:git:https://github.com/wutsi/wutsi-stream.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
   <distributionManagement>
     <repository>
       <id>github</id>
