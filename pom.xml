@@ -6,7 +6,7 @@
 
   <artifactId>wutsi-stream</artifactId>
   <groupId>com.wutsi</groupId>
-  <version>1.4.0</version>
+  <version>1.4.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>wutsi-stream</name>
