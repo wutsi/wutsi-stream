@@ -7,4 +7,7 @@ data class Event(
     val type: String = "",
     val timestamp: OffsetDateTime = OffsetDateTime.now(),
     val payload: String = ""
-)
+) {
+    fun <T> payloadAs(type: Class<T>): T =
+        ObjectMapperBuilder().build().readValue(payload, type)
+}
