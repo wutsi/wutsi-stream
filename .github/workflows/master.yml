@@ -23,5 +23,5 @@ jobs:
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git pull
+          git pull -f
           mvn -q -B release:prepare release:perform
