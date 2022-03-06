@@ -14,7 +14,7 @@
     <jacoco.threshold.line>0.94</jacoco.threshold.line>
     <jacoco.threshold.class>0.94</jacoco.threshold.class>
 
-    <jackson.version>2.13.1</jackson.version>
+    <jackson.version>2.13.2</jackson.version>
     <junit.version>5.8.2</junit.version>
     <klint.version>0.44.0</klint.version>
     <kotlin.version>1.6.10</kotlin.version>
