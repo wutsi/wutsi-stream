@@ -4,7 +4,7 @@
 
   <artifactId>wutsi-stream</artifactId>
   <groupId>com.wutsi</groupId>
-  <version>1.5.72-SNAPSHOT</version>
+  <version>1.5.72</version>
   <packaging>jar</packaging>
 
   <name>wutsi-stream</name>
@@ -29,7 +29,7 @@
 
   <scm>
     <developerConnection>scm:git:https://github.com/wutsi/wutsi-stream.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>wutsi-stream-1.5.72</tag>
   </scm>
 
   <distributionManagement>
