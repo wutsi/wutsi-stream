@@ -17,7 +17,7 @@
     <jackson.version>2.15.2</jackson.version>
     <junit.version>5.9.3</junit.version>
     <klint.version>0.45.2</klint.version>
-    <kotlin.version>1.8.21</kotlin.version>
+    <kotlin.version>1.8.22</kotlin.version>
     <kotlin-ktlint.version>0.38.1</kotlin-ktlint.version>
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
     <slf4j.version>2.0.7</slf4j.version>
